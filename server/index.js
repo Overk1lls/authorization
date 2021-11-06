@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/login', require('./routes/login'));
 
 const start = async () => {
     try {
