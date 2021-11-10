@@ -12,8 +12,12 @@ router.post('/', async (req, res) => {
         let { email, password } = req.body;
         let encryptPassword = crypto.HmacSHA256(password, process.env.SECRET_KEY).toString();
 
-        let findUser = await User.findOne({ email: email, password: encryptPassword });
-        if (findUser) res.json({ token: findUser.token });
+        let user = await User.findOne({ email: email, password: encryptPassword });
+        if (user) {
+            if (user.activationCode) {
+                res.json({ response: 'Email activation link has been already sent to your email. Please, use it!' });
+            } else res.json({ token: user.token });
+        }
         else res.status(400).json({ error: 'wrong data' });
     } catch (e) {
         res.status(400).json({ error: e.message });

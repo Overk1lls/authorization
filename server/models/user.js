@@ -9,6 +9,7 @@ let schema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     resetCode: { type: String },
+    activationCode: { type: String }
 });
 
 module.exports = model('user', schema);

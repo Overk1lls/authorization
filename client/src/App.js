@@ -4,11 +4,11 @@ import Home from './components/home';
 import Login from './components/login';
 import useToken from './hooks/useToken';
 import ResetPassword from './components/resetPassword';
+import ActivateEmail from './components/activateEmail';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const { token, setToken } = useToken();
-  // const resetCode = localStorage.getItem('resetCode');
 
   if (!token) {
     return (
@@ -22,6 +22,9 @@ function App() {
           </Route>
           <Route path='/resetPassword/:resetCode'>
             <ResetPassword />
+          </Route>
+          <Route path='/activateEmail/:code'>
+            <ActivateEmail />
           </Route>
           <Redirect to='/login' />;
         </Switch>

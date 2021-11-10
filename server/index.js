@@ -14,7 +14,7 @@ app.use((req, res, next) => {
     console.log(date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(), req.method, req.path);
     next();
 });
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/authorization'));
 app.use('/api/login', require('./routes/login'));
 app.use('/api/resetPassword', require('./routes/resetPassword'));
 

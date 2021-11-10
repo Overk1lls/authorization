@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const FETCH_URL = 'http://localhost:4000/api/login';
 
-const fetchAPI = (credentials, url) => {
+const loginAPI = (credentials, url) => {
     return fetch(FETCH_URL + url, {
         method: 'POST',
         headers: {
@@ -25,15 +25,17 @@ export default function Login({ setToken }) {
         e.preventDefault();
 
         if (email && password) {
-            let user = await fetchAPI({ email, password }, '');
-            if (!user.error) setToken(user.token);
+            let response = await loginAPI({ email, password }, '');
+            if (response.error) console.log(response);
+            else if (response.response) setResponse(response.response);
+            else setToken(response.token);
         }
     };
 
     const resetPasswordHandler = async (e) => {
         e.preventDefault();
         if (email) {
-            let resetPass = await fetchAPI({ email }, '/resetPassword');
+            let resetPass = await loginAPI({ email }, '/resetPassword');
             if (resetPass.error) console.log(resetPass.error);
             if (resetPass.response) setResponse(resetPass.response);
         }
