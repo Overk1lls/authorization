@@ -8,7 +8,7 @@ In the project directory, move to the client & server folders and do (separately
 
 ### `npm install`
 
-Installs the required dependencies to worth with.\
+Installs the required dependencies to work with the application.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
