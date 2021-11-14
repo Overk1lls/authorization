@@ -24,7 +24,7 @@ export default function ActivateEmail() {
     }, [code]);
 
     return (
-        <div className="container">
+        <div className="text-center">
             <div className="alert alert-danger">Email has been activated. Thank you!</div>
             <Link to='/login'><button className="btn btn-outline-dark btn-lg px-5" type="submit">Back</button></Link>
         </div>

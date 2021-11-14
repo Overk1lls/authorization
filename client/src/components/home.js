@@ -1,19 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Home() {
-    const handleBack = () => {
+    const history = useHistory();
+
+    const handleBack = (e) => {
+        e.preventDefault();
         localStorage.removeItem('token');
+        history.go(0);
     };
 
     return (
-        <div className="justify-content-center align-items-center h-100">
-            <Link to={'/'}>
-                <button className="btn btn-outline-dark btn-lg px-5" type="submit" onClick={handleBack}>
-                    Logout
-                </button>
-            </Link>
-            <h1 className="justify-content-center align-items-center">Main Page</h1>
+        <div className="text-center">
+            <h3>You've successfully authorized!</h3>
+            <Link to={'/'}><button className="btn btn-outline-dark mt-3 px-5" type="submit" onClick={handleBack}>Logout</button></Link>
         </div>
     );
 }

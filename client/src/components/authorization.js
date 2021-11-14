@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const SERVER_URL = 'http://localhost:4000';
 
@@ -16,7 +15,7 @@ const auth = async credentials => {
         .catch(e => console.log(e.message));
 };
 
-export default function Authorization({ setToken }) {
+export default function Authorization() {
     const [name, setName] = useState();
     const [surname, setSurname] = useState();
     const [phone, setPhone] = useState();
@@ -36,77 +35,40 @@ export default function Authorization({ setToken }) {
     };
 
     return (
-        <form className="vh-100 gradient-custom" onSubmit={submitHandler}>
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-                        {response ? <div className="alert alert-danger">{response}</div> : response}
-                        <div className="card bg-dark text-white" style={{ borderRadius: '1rem' }}>
-                            <div className="card-body p-5 text-center">
-                                <div className="mb-md-5 mt-md-4 pb-5">
-                                    <h2 className="fw-bold mb-2 text-uppercase">Authorization</h2>
-                                    <p className="text-white-50 mb-5">Please enter REAL email</p>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Name"
-                                            onChange={e => setName(e.target.value)}
-                                            type="text"
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Surname"
-                                            onChange={e => setSurname(e.target.value)}
-                                            type="text"
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Phone number"
-                                            onChange={e => setPhone(e.target.value)}
-                                            type="text"
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Date"
-                                            onChange={e => setDate(e.target.value)}
-                                            type="date"
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Email"
-                                            onChange={e => setEmail(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Password"
-                                            onChange={e => setPassword(e.target.value)}
-                                            type="password"
-                                        />
-                                    </div>
-                                    <button className="btn btn-outline-light btn-lg px-5" type="submit">Enter</button>
-                                    <Link to='/login'>
-                                        <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <form onSubmit={submitHandler}>
+            {response ? <div className="alert alert-danger">{response}</div> : response}
+            <div className="row mb-2">
+                <div className="col">
+                    <label htmlFor="inputName">Name</label>
+                    <input type="text" className="form-control" id="inputName" placeholder="Name" onChange={e => setName(e.target.value)}></input>
                 </div>
+                <div className="col mb-2">
+                    <label htmlFor="inputSurname">Surname</label>
+                    <input type="text" className="form-control" id="inputSurname" placeholder="Surname" onChange={e => setSurname(e.target.value)}></input>
+                </div>
+            </div>
+            <div className="row mb-2">
+                <div className="col mb-2">
+                    <label htmlFor="inputEmail">Email</label>
+                    <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={e => setEmail(e.target.value)}></input>
+                </div>
+                <div className="col mb-2">
+                    <label htmlFor="inputPassword">Password</label>
+                    <input type="password" className="form-control" id="inputPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}></input>
+                </div>
+            </div>
+            <div className="form-group mb-2">
+                <label htmlFor="inputPhone">Phone</label>
+                <input type="text" className="form-control" id="inputPhone" placeholder="+3808005553535" onChange={e => setPhone(e.target.value)}></input>
+            </div>
+            <div className="form-group mb-3">
+                <label htmlFor="inputDate">Date</label>
+                <input type="date" className="form-control" id="inputDate" onChange={e => setDate(e.target.value)}></input>
+            </div>
+            <div className="text-center">
+                <button type="submit" className="btn btn-outline-dark btn-lg px-5" style={{ marginRight: '5px' }}>Sign Up</button>
+                <Link to='/login'><button className="btn btn-outline-dark btn-lg px-5" type="submit">Login</button></Link>
             </div>
         </form>
     );
 }
-
-Authorization.propTypes = {
-    setToken: PropTypes.func.isRequired
-};

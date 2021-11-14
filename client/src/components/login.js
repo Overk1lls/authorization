@@ -38,52 +38,25 @@ export default function Login({ setToken }) {
             let resetPass = await loginAPI({ email }, '/resetPassword');
             if (resetPass.error) console.log(resetPass.error);
             if (resetPass.response) setResponse(resetPass.response);
-        }
+        } else setResponse('Please, provide an email');
     };
 
     return (
-        <form className="vh-100 gradient-custom" onSubmit={submitHandler}>
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-                       {response ? <div className="alert alert-danger">{response}</div> : ''}
-                        <div className="card bg-dark text-white" style={{ borderRadius: '1rem' }}>
-                            <div className="card-body p-5 text-center">
-                                <div className="mb-md-5 mt-md-4 pb-5">
-                                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                                    <p className="text-white-50 mb-5">Please enter your email and password!</p>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Email"
-                                            onChange={e => setEmail(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="form-outline form-white mb-4">
-                                        <input
-                                            className="form-control form-control-lg"
-                                            placeholder="Password"
-                                            onChange={e => setPassword(e.target.value)}
-                                            type="password"
-                                        />
-                                    </div>
-                                    <div className="btn-group" role="group">
-                                        <button className="btn btn-outline-light btn-lg px-5" type="submit">
-                                            Enter
-                                        </button>
-                                        <Link to='/auth'>
-                                            <button className="btn btn-outline-light btn-lg px-5" type="submit">
-                                                Register
-                                            </button>
-                                        </Link>
-                                    </div>
-
-                                </div>
-                                <button className="btn btn-outline-light" onClick={resetPasswordHandler}>Reset Password</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <form onSubmit={submitHandler}>
+            {response ? <div className="alert alert-danger">{response}</div> : response}
+            <h3>Login</h3>
+            <div className="form-group mb-2">
+                <label htmlFor="inputEmail">Email</label>
+                <input type="email" className="form-control" id="inputEmail" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            </div>
+            <div className="form-group mb-2">
+                <label htmlFor="inputPassword">Password</label>
+                <input type="password" className="form-control" id="inputPassword" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+            </div>
+            <div className="text-center">
+                <button type="submit" className="btn btn-outline-dark btn-lg px-5" style={{ marginRight: '5px' }}>Sign In</button>
+                <Link to='/auth'><button className="btn btn-outline-dark btn-lg px-5" type="submit">Register</button></Link>
+                <Link to='#'><p className="mt-3" onClick={resetPasswordHandler}><strong>Forgot Password?</strong></p></Link>
             </div>
         </form>
     );
