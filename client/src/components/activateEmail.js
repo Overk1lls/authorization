@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 const SERVER_URL = 'http://localhost:4000';
 
 const activateEmail = async credentials => {
-    return await fetch(SERVER_URL + '/api/auth/activateEmail', {
+    return await fetch(SERVER_URL + '/api/auth/activate-email', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

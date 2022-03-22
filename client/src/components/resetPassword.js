@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 const SERVER_URL = 'http://localhost:4000';
 
 const fetchAPI = credentials => {
-    return fetch(SERVER_URL + '/api/resetPassword', {
+    return fetch(SERVER_URL + '/api/reset-password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
