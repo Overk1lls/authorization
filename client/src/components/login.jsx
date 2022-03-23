@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { msgToJSX, fetchAPI } from '../lib/utils';
 import { errors, SERVER_URL } from './authorization';
 
-export function Login({ setToken }) {
+export const Login = ({ setToken }) => {
     const [credentials, setCredentials] = useState({});
     const [response, setResponse] = useState(<></>);
 
@@ -107,7 +107,7 @@ export function Login({ setToken }) {
             </div>
         </form>
     );
-}
+};
 
 Login.propTypes = {
     setToken: PropTypes.func.isRequired
