@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Authorization from './components/authorization';
-import Home from './components/home';
-import Login from './components/login';
-import useToken from './hooks/useToken';
-import ResetPassword from './components/resetPassword';
-import ActivateEmail from './components/activateEmail';
-import Footer from './components/footer';
+import { Authorization } from './components/authorization';
+import { Home } from './components/home';
+import { Login } from './components/login';
+import { ResetPassword } from './components/reset-password';
+import { ActivateEmail } from './components/activate-email';
+import { Footer } from './components/footer';
+import { useToken } from './hooks/useToken';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -22,10 +22,10 @@ function App() {
             <Route exact path='/auth'>
               <Authorization />
             </Route>
-            <Route path='/resetPassword/:resetCode'>
+            <Route path='/reset-password/:resetCode'>
               <ResetPassword />
             </Route>
-            <Route path='/activateEmail/:code'>
+            <Route path='/activate-email/:code'>
               <ActivateEmail />
             </Route>
             <Redirect to='/login' />;
@@ -38,15 +38,15 @@ function App() {
 
   return (
     <div className="container pt-5">
-    <Router>
-      <Switch>
-        <Route exact path='/home'>
-          <Home />
-        </Route>
-        <Redirect to='/home' />
-      </Switch>
-      <Footer />
-    </Router></div>
+      <Router>
+        <Switch>
+          <Route exact path='/home'>
+            <Home />
+          </Route>
+          <Redirect to='/home' />
+        </Switch>
+        <Footer />
+      </Router></div>
   );
 }
 

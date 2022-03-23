@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
         });
 
         res.status(201).send({
-            response: 'User activation link is sent on your email'
+            response: 'User activation link is sent to your email'
         });
     } catch (err) {
         res.status(500).send({ error: ErrorCode.SERVER });

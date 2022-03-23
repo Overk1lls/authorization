@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
-export default function useToken() {
-    const getToken = () => {
-        return localStorage.getItem('token');
-    };
+export const useToken = () => {
+    const getToken = () => localStorage.getItem('token');
 
     const [token, setToken] = useState(getToken());
 
@@ -16,4 +14,4 @@ export default function useToken() {
         token,
         setToken: saveToken
     };
-}
+};
