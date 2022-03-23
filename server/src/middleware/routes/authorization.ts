@@ -7,7 +7,7 @@ import { ErrorCode } from '../../errors/api-error';
 import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
 import { generateId } from '../../lib/utils';
 
-export const router = Router();
+const router = Router();
 
 router.post('/', async (req, res) => {
     try {
@@ -69,17 +69,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.post('/activate-email', async (req, res) => {
-    const { code }: { code: string } = req.body;
-
-    const user = await Users.findOneAndUpdate(
-        { activationCode: code },
-        { activationCode: '' },
-        { new: true }
-    );
-    if (!user) return res.status(400).json({ error: ErrorCode.NO_USER });
-    else if (!user.activationCode)
-        return res.status(400).json({ error: 'The email is already activated' });
-
-    res.status(200).json({ response: 'The email is activated' });
-});
+export default router;

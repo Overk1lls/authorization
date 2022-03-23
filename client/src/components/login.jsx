@@ -58,7 +58,7 @@ export const Login = ({ setToken }) => {
     return (
         <form>
             {response}
-            <h3>Login</h3>
+            <h3 className='text-center'>Login</h3>
             <div className="form-group mb-2">
                 <label htmlFor="inputEmail">Email</label>
                 <input
@@ -84,6 +84,7 @@ export const Login = ({ setToken }) => {
                     type="submit"
                     className="btn btn-outline-dark btn-lg px-5"
                     style={{ marginRight: '5px' }}
+                    onClick={submitHandler}
                 >
                     Sign In
                 </button>
@@ -91,7 +92,6 @@ export const Login = ({ setToken }) => {
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"
-                        onClick={submitHandler}
                     >
                         Register
                     </button>

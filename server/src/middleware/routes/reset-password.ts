@@ -4,7 +4,7 @@ import { ErrorCode } from '../../errors/api-error';
 import { IUserModel } from '../../interfaces/user';
 import { Users } from '../../models/user';
 
-export const router = Router();
+const router = Router();
 
 router.post('/', async (req, res) => {
     try {
@@ -27,3 +27,5 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: ErrorCode.SERVER });
     }
 });
+
+export default router;

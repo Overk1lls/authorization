@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { router as authRoute } from './routes/authorization';
-import { router as loginRoute } from './routes/login';
-import { router as resetPwdRoute } from './routes/reset-password';
+import authRoute from './routes/authorization';
+import loginRoute from './routes/login';
+import resetPwdRoute from './routes/reset-password';
+import activateEmailRoute from './routes/activate-email';
 
 export const createApp = () => {
     const app = express();
@@ -19,6 +20,7 @@ export const createApp = () => {
     app.use('/api/auth', authRoute);
     app.use('/api/login', loginRoute);
     app.use('/api/reset-password', resetPwdRoute);
+    app.use('/api/activate-email', activateEmailRoute);
 
     return app;
 };

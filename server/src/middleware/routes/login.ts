@@ -7,7 +7,7 @@ import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
 import { createTransport } from 'nodemailer';
 import { generateId } from '../../lib/utils';
 
-export const router = Router();
+const router = Router();
 
 router.post('/', async (req, res) => {
     try {
@@ -77,3 +77,5 @@ router.post('/reset-password', async (req, res) => {
         console.error(err);
     }
 });
+
+export default router;

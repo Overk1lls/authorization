@@ -10,17 +10,14 @@ export const ActivateEmail = () => {
     useEffect(() => {
         setResponse(msgToJSX('info', 'The email is being activated...'));
 
-        const activatingData = fetchAPI({
-            url: `${SERVER_URL}/api/activate-email`,
-            method: 'POST',
-            body: { code }
-        });
-
-        setResponse(msgToJSX(
-            activatingData && !activatingData.error ?
-                ('info', 'The email is activated, thank you!') :
-                'danger', !activatingData ? errors.SERVER : activatingData.error
-        ));
+        fetchAPI({ url: `${SERVER_URL}/api/activate-email/${code}` })
+            .then(data =>
+                setResponse(msgToJSX(
+                    data && !data.error ?
+                        ('info', 'The email is activated, thank you!') :
+                        'danger', !data ? errors.SERVER : data.error
+                ))
+            );
     }, [code]);
 
     return (
