@@ -7,6 +7,6 @@ export const Footer = () =>
             className="container text-center"
             style={{ color: "white" }}
         >
-            © 2022 Pakhota Yury
+            © 2022 Pakhota Yurii
         </div>
     </footer>;

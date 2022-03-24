@@ -1,22 +1,32 @@
 import { Router } from "express";
-import { ErrorCode } from "../../errors/api-error";
+import { APIError, ErrorCode } from "../../errors/api-error";
+import { errors } from "../../lib/config";
 import { Users } from "../../models/user";
 
 const router = Router();
 
-router.get('/:code', async (req, res) => {
-    const { code } = req.params;
+router.get('/:code', async (req, res, next) => {
+    try {
+        const { code } = req.params;
 
-    const user = await Users.findOneAndUpdate(
-        { activationCode: code },
-        { activationCode: '' },
-        { new: true }
-    );
-    if (!user) return res.status(400).json({ error: ErrorCode.NO_USER });
-    else if (!user.activationCode)
-        return res.status(400).json({ error: 'The email is already activated' });
+        if (!code) throw new APIError(ErrorCode.BAD_REQUEST, 'No code provided');
 
-    res.status(200).json({ response: 'The email is activated' });
+        const user = await Users.findOneAndUpdate(
+            { activationCode: code },
+            { activationCode: '' },
+            { new: true }
+        );
+        if (!user) throw new APIError(ErrorCode.NOT_FOUND, errors.NO_USER);
+        else if (!user.activationCode) {
+            throw new APIError(
+                ErrorCode.BAD_REQUEST,
+                'The email is already activated'
+            );
+        }
+        res.status(200).json({ response: 'The email is activated' });
+    } catch (error) {
+        next(error);
+    }
 });
 
 export default router;

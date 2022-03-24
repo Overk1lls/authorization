@@ -4,6 +4,7 @@ import authRoute from './routes/authorization';
 import loginRoute from './routes/login';
 import resetPwdRoute from './routes/reset-password';
 import activateEmailRoute from './routes/activate-email';
+import { errorHandler } from './handlers/error-handler';
 
 export const createApp = () => {
     const app = express();
@@ -21,6 +22,7 @@ export const createApp = () => {
     app.use('/api/login', loginRoute);
     app.use('/api/reset-password', resetPwdRoute);
     app.use('/api/activate-email', activateEmailRoute);
+    app.use(errorHandler);
 
     return app;
 };

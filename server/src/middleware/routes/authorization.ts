@@ -3,13 +3,13 @@ import { IUserAuth } from '../../interfaces/dto/user.dto';
 import { hashSync } from 'bcrypt';
 import { createTransport } from 'nodemailer';
 import { Users } from '../../models/user';
-import { ErrorCode } from '../../errors/api-error';
+import { APIError, ErrorCode } from '../../errors/api-error';
 import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
 import { generateId } from '../../lib/utils';
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         const {
             name,
@@ -20,13 +20,11 @@ router.post('/', async (req, res) => {
             password
         } = req.body as IUserAuth;
 
-        if (!password) throw new Error(ErrorCode.BAD_REQUEST);
-
         const userExists = await Users.findOne({ email });
-        if (userExists) return res.status(400).json({ error: 'User already exists' });
+        if (userExists)
+            throw new APIError(ErrorCode.BAD_REQUEST, 'User already exists');
 
         const pwdHash = hashSync(password, 3);
-
         const token = generateId();
         const activationCode = generateId();
         const url = `${LOCAL_URL}/activate-email/${activationCode}`;
@@ -63,9 +61,8 @@ router.post('/', async (req, res) => {
         res.status(201).send({
             response: 'User activation link is sent to your email'
         });
-    } catch (err) {
-        res.status(500).send({ error: ErrorCode.SERVER });
-        console.error(err);
+    } catch (error) {
+        next(error);
     }
 });
 

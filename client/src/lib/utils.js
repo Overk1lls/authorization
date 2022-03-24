@@ -9,7 +9,9 @@ export const fetchAPI = async ({
     .then(data => data.json())
     .catch(err => console.error(err));
 
-export const msgToJSX = (type, message) => {
-    const className = `alert alert-${type}`;
+export const msgToJSX = ({ message, type }) => {
+    const className = `alert alert-${type ? type : 'danger'}`;
     return <div className={className}>{message}</div>;
 };
+
+export const isThereData = data => data ? (data.error ? false : true) : false;

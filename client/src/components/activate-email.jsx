@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { fetchAPI, msgToJSX } from '../lib/utils';
+import { fetchAPI, isThereData, msgToJSX } from '../lib/utils';
 import { errors, SERVER_URL } from './authorization';
 
 export const ActivateEmail = () => {
@@ -8,14 +8,17 @@ export const ActivateEmail = () => {
     const [response, setResponse] = useState(<></>);
 
     useEffect(() => {
-        setResponse(msgToJSX('info', 'The email is being activated...'));
+        setResponse(msgToJSX({
+            type: 'info',
+            message: 'The email is being activated...'
+        }));
 
         fetchAPI({ url: `${SERVER_URL}/api/activate-email/${code}` })
             .then(data =>
                 setResponse(msgToJSX(
-                    data && !data.error ?
-                        ('info', 'The email is activated, thank you!') :
-                        'danger', !data ? errors.SERVER : data.error
+                    isThereData(data) ?
+                        { type: 'info', message: 'The email is activated, thank you!' } :
+                        { message: !data ? errors.SERVER : data.error }
                 ))
             );
     }, [code]);

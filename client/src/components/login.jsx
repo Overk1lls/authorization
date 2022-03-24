@@ -1,59 +1,54 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { msgToJSX, fetchAPI } from '../lib/utils';
+import { msgToJSX, fetchAPI, isThereData } from '../lib/utils';
 import { errors, SERVER_URL } from './authorization';
 
 export const Login = ({ setToken }) => {
     const [credentials, setCredentials] = useState({});
     const [response, setResponse] = useState(<></>);
 
-    const preHandlerActions = event => {
+    const submitHandler = async event => {
         event.preventDefault();
         setResponse(<></>);
-    };
-
-    const submitHandler = async event => {
-        preHandlerActions(event);
 
         if (!credentials.email || !credentials.password)
-            return setResponse(msgToJSX('danger', errors.NO_DATA));
+            return setResponse(msgToJSX({ message: errors.NO_DATA }));
 
-        const loginData = await fetchAPI({
+        const apiData = await fetchAPI({
             url: `${SERVER_URL}/api/login`,
             method: 'POST',
             body: credentials
         });
 
-        loginData && !loginData.error ?
-            setToken(loginData.token) :
-            isThereData(loginData);
+        isThereData(apiData) ?
+            setToken(apiData.token) :
+            setResponse(msgToJSX({
+                message: !apiData ? errors.SERVER : apiData.error
+            }));
     };
 
-    const resetPasswordHandler = async event => {
-        preHandlerActions(event);
+    const resetPasswordHandler = async () => {
+        setResponse(<></>);
 
         const email = credentials.email;
 
         if (!email)
-            return setResponse(msgToJSX('danger', errors.NO_DATA));
+            return setResponse(msgToJSX({ message: 'Please, fill your email' }));
 
-        const resetPwdData = await fetchAPI({
-            url: `${SERVER_URL}/reset-password`,
+        fetchAPI({
+            url: `${SERVER_URL}/api/login/reset-password`,
             method: 'POST',
-            body: JSON.stringify({ email })
+            body: { email }
+        }).then(data => {
+            if (!isThereData(data))
+                setResponse(msgToJSX({ message: !data ? errors.SERVER : data.error }));
+            else setResponse(msgToJSX({ type: 'info', message: data.response }));
         });
-
-        resetPwdData && !resetPwdData.error ?
-            setResponse(msgToJSX('info', resetPwdData.response)) :
-            isThereData(resetPwdData);
     };
 
     const setData = (record, value) =>
         setCredentials({ ...credentials, [record]: value });
-
-    const isThereData = data =>
-        setResponse(msgToJSX('danger', !data ? errors.SERVER : data.error));
 
     return (
         <form>

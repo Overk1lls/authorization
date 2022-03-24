@@ -1,5 +1,14 @@
 export enum ErrorCode {
     SERVER = 'Something went wrong...',
     BAD_REQUEST = 'Invalid request',
-    NO_USER = 'User is not found'
+    NOT_FOUND = 'NOT_FOUND'
+}
+
+export class APIError extends Error {
+    code: ErrorCode;
+
+    constructor(code: ErrorCode, message?: string) {
+        super(message ? message : code);
+        this.code = code;
+    }
 }

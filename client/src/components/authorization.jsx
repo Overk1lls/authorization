@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { msgToJSX, fetchAPI } from '../lib/utils';
+import { msgToJSX, fetchAPI, isThereData } from '../lib/utils';
 
 export const SERVER_URL = 'http://localhost:4000';
 export const errors = {
@@ -20,17 +20,18 @@ export const Authorization = () => {
         Object.values(userData).forEach(value => {
             if (!value) return validated = false;
         });
-        if (!validated) return setResponse(msgToJSX('danger', errors.NO_DATA));
+        if (!validated) return setResponse(msgToJSX({ message: errors.NO_DATA }));
 
         const authData = await fetchAPI({
             url: `${SERVER_URL}/api/auth`,
             method: 'POST',
             body: userData
         });
+
         setResponse(msgToJSX(
-            !authData || (authData && authData.error) ?
-                ('danger', errors.SERVER) :
-                'info', authData.response
+            isThereData(authData) ?
+                { type: 'info', message: authData.response } :
+                { message: !authData ? errors.SERVER : authData.error }
         ));
     };
 
@@ -119,7 +120,7 @@ export const Authorization = () => {
                 >
                     Sign Up
                 </button>
-                <Link to='/login'>
+                <Link to='/'>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"
