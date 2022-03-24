@@ -1,11 +1,16 @@
 export const fetchAPI = async ({
     url,
     method = 'GET',
+    token = '',
     headers = {
         'Content-Type': 'application/json'
     },
     body
-}) => fetch(url, { method, headers, body: JSON.stringify(body) })
+}) => fetch(url, {
+    method,
+    headers: { ...headers, authorization: `Bearer ${token}` },
+    body: JSON.stringify(body)
+})
     .then(data => data.json())
     .catch(err => console.error(err));
 

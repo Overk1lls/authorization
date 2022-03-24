@@ -4,7 +4,7 @@ import authRoute from './routes/authorization';
 import loginRoute from './routes/login';
 import resetPwdRoute from './routes/reset-password';
 import activateEmailRoute from './routes/activate-email';
-import { errorHandler } from './handlers/error-handler';
+import { errorHandler } from './handlers/error.handler';
 
 export const createApp = () => {
     const app = express();

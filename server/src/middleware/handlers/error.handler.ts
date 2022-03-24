@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from "express";
-import { APIError, ErrorCode } from "../../errors/api-error";
+import { APIError, ErrorCode } from "../../errors/api.error";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     if (err instanceof APIError) {
@@ -7,7 +7,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
         switch (err.code) {
             case ErrorCode.SERVER: {
-                res.status(500).json({ error: ErrorCode.SERVER });
+                res.status(500).json(errMessage);
                 break;
             }
 
@@ -16,8 +16,18 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
                 break;
             }
 
+            case ErrorCode.FORBIDDEN: {
+                res.status(403);
+                break;
+            }
+
+            case ErrorCode.UNAUTHORIZED: {
+                res.status(401);
+                break;
+            }
+
             default: {
-                res.status(400).json(errMessage);
+                res.status(400);
                 break;
             }
         }

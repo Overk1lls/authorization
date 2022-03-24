@@ -1,6 +1,6 @@
 import { compareSync, hashSync } from 'bcrypt';
 import { Router } from 'express';
-import { APIError, ErrorCode } from '../../errors/api-error';
+import { APIError, ErrorCode } from '../../errors/api.error';
 import { IUserModel } from '../../interfaces/user';
 import { errors } from '../../lib/config';
 import { Users } from '../../models/user';

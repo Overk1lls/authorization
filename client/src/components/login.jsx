@@ -15,17 +15,16 @@ export const Login = ({ setToken }) => {
         if (!credentials.email || !credentials.password)
             return setResponse(msgToJSX({ message: errors.NO_DATA }));
 
-        const apiData = await fetchAPI({
+        fetchAPI({
             url: `${SERVER_URL}/api/login`,
             method: 'POST',
             body: credentials
-        });
-
-        isThereData(apiData) ?
-            setToken(apiData.token) :
-            setResponse(msgToJSX({
-                message: !apiData ? errors.SERVER : apiData.error
-            }));
+        }).then(data =>
+            isThereData(data) ?
+                setToken(data.token) :
+                setResponse(msgToJSX({
+                    message: !data ? errors.SERVER : data.error
+                })));
     };
 
     const resetPasswordHandler = async () => {

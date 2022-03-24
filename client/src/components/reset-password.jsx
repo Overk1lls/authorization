@@ -21,6 +21,7 @@ export const ResetPassword = () => {
         fetchAPI({
             url: `${SERVER_URL}/api/reset-password`,
             method: 'POST',
+            token: localStorage.getItem('token'),
             body: { resetCode: code, password: newPwd }
         }).then(data => {
             if (!isThereData(data))

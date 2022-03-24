@@ -3,7 +3,7 @@ import { IUserAuth } from '../../interfaces/dto/user.dto';
 import { hashSync } from 'bcrypt';
 import { createTransport } from 'nodemailer';
 import { Users } from '../../models/user';
-import { APIError, ErrorCode } from '../../errors/api-error';
+import { APIError, ErrorCode } from '../../errors/api.error';
 import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
 import { generateId } from '../../lib/utils';
 

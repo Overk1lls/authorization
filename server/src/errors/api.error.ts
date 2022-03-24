@@ -1,7 +1,9 @@
 export enum ErrorCode {
     SERVER = 'Something went wrong...',
     BAD_REQUEST = 'Invalid request',
-    NOT_FOUND = 'NOT_FOUND'
+    NOT_FOUND = 'NOT_FOUND',
+    UNAUTHORIZED = 'UNAUTHORIZED',
+    FORBIDDEN = 'FORBIDDEN'
 }
 
 export class APIError extends Error {

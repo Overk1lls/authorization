@@ -4,7 +4,13 @@ import { MongoDb } from './services/mongodb';
 
 config();
 
-export const { LOCAL_URL, EMAIL, EMAIL_PWD, PORT, MONGO_URI } = process.env;
+export const {
+    LOCAL_URL,
+    EMAIL,
+    EMAIL_PWD,
+    PORT,
+    MONGO_URI
+} = process.env;
 
 const app = createApp();
 
