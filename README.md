@@ -1,23 +1,6 @@
-# Getting Started
+# Authorization
+This is a pet project made on such technologies as React.js, Node.js and TypeScript.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, move to the client & server folders and do (separately):
-
-### `npm install`
-
-Installs the required dependencies to work with the application.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm start`
-
-Runs the application in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Files
+The `API` folder is the server side of the project (Node.js + TypeScript).
+The `client` folder is the client side of the project (React.js).
