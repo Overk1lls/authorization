@@ -1,4 +1,4 @@
-import { connect, disconnect } from "mongoose";
+import { connect, disconnect } from 'mongoose';
 
 export interface IDbDriver {
     connect: () => Promise<unknown>;

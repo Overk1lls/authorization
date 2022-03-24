@@ -9,7 +9,6 @@ import { generateId } from '../../lib/utils';
 import { errors, JWT_SECRET } from '../../lib/config';
 import { sign } from 'jsonwebtoken';
 import { Tokens } from '../../models/token';
-import { jwtHandler, PAYLOAD } from '../handlers/jwt.handler';
 
 const router = Router();
 

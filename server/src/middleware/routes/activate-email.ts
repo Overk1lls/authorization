@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { APIError, ErrorCode } from "../../errors/api.error";
-import { errors } from "../../lib/config";
-import { Users } from "../../models/user";
+import { Router } from 'express';
+import { APIError, ErrorCode } from '../../errors/api.error';
+import { errors } from '../../lib/config';
+import { Users } from '../../models/user';
 
 const router = Router();
 
