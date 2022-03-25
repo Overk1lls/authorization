@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { baseUrl } from '../App';
 import { fetchAPI, isThereData, msgToJSX } from '../lib/utils';
-import { errors, SERVER_URL } from './authorization';
+import { errors } from './authorization';
 
-export const ResetPassword = () => {
+export default function ResetPassword() {
     const [pwdData, setPwdData] = useState({});
     const [response, setResponse] = useState(<></>);
     const { code } = useParams();
@@ -19,7 +20,7 @@ export const ResetPassword = () => {
             return setResponse(msgToJSX({ message: 'Passwords are the same!' }));
 
         fetchAPI({
-            url: `${SERVER_URL}/api/reset-password`,
+            url: `${process.env.REACT_APP_API}/reset-password`,
             method: 'POST',
             token: localStorage.getItem('token'),
             body: { resetCode: code, password: newPwd }
@@ -75,7 +76,7 @@ export const ResetPassword = () => {
                 >
                     Enter
                 </button>
-                <Link to='/'>
+                <Link to={`${baseUrl}/`}>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"
@@ -86,4 +87,4 @@ export const ResetPassword = () => {
             </div>
         </form>
     );
-};
+}

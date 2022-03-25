@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { msgToJSX, fetchAPI, isThereData } from '../lib/utils';
+import { baseUrl } from '../App';
 
-export const SERVER_URL = 'http://localhost:4000';
 export const errors = {
     NO_DATA: 'Please, fill the form',
     SERVER: 'Something went wrong...'
 };
 
-export const Authorization = () => {
+export default function Authorization() {
     const [userData, setUserData] = useState({});
     const [response, setResponse] = useState(<></>);
 
@@ -23,7 +23,7 @@ export const Authorization = () => {
         if (!validated) return setResponse(msgToJSX({ message: errors.NO_DATA }));
 
         const authData = await fetchAPI({
-            url: `${SERVER_URL}/api/auth`,
+            url: `${process.env.REACT_APP_API}/auth`,
             method: 'POST',
             body: userData
         });
@@ -120,7 +120,7 @@ export const Authorization = () => {
                 >
                     Sign Up
                 </button>
-                <Link to='/'>
+                <Link to={`${baseUrl}/`}>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"
@@ -131,4 +131,4 @@ export const Authorization = () => {
             </div>
         </form>
     );
-};
+}

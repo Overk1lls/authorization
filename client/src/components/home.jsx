@@ -1,6 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
+import { baseUrl } from '../App';
 
-export const Home = () => {
+export default function Home() {
     const history = useHistory();
 
     const handleBack = event => {
@@ -13,7 +14,7 @@ export const Home = () => {
     return (
         <div className="text-center">
             <h3>You've successfully authorized!</h3>
-            <Link to={'/'}>
+            <Link to={`${baseUrl}/`}>
                 <button
                     className="btn btn-outline-dark mt-3 px-5"
                     type="submit"
@@ -24,4 +25,4 @@ export const Home = () => {
             </Link>
         </div>
     );
-};
+}

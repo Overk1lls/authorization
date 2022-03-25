@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../App';
 import { msgToJSX, fetchAPI, isThereData } from '../lib/utils';
-import { errors, SERVER_URL } from './authorization';
+import { errors } from './authorization';
 
-export const Login = ({ setToken }) => {
+export default function Login({ setToken }) {
     const [credentials, setCredentials] = useState({});
     const [response, setResponse] = useState(<></>);
+    const API_URL = `${process.env.REACT_APP_API}/login`;
 
     const submitHandler = async event => {
         event.preventDefault();
@@ -16,7 +18,7 @@ export const Login = ({ setToken }) => {
             return setResponse(msgToJSX({ message: errors.NO_DATA }));
 
         fetchAPI({
-            url: `${SERVER_URL}/api/login`,
+            url: API_URL,
             method: 'POST',
             body: credentials
         }).then(data =>
@@ -36,7 +38,7 @@ export const Login = ({ setToken }) => {
             return setResponse(msgToJSX({ message: 'Please, fill your email' }));
 
         fetchAPI({
-            url: `${SERVER_URL}/api/login/reset-password`,
+            url: `${API_URL}/reset-password`,
             method: 'POST',
             body: { email }
         }).then(data => {
@@ -82,7 +84,7 @@ export const Login = ({ setToken }) => {
                 >
                     Sign In
                 </button>
-                <Link to='/auth'>
+                <Link to={`${baseUrl}/auth`}>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"
@@ -90,7 +92,7 @@ export const Login = ({ setToken }) => {
                         Register
                     </button>
                 </Link>
-                <Link to='#'>
+                <Link to={'#'}>
                     <p
                         className="mt-3"
                         onClick={resetPasswordHandler}
@@ -101,7 +103,7 @@ export const Login = ({ setToken }) => {
             </div>
         </form>
     );
-};
+}
 
 Login.propTypes = {
     setToken: PropTypes.func.isRequired

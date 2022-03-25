@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { baseUrl } from '../App';
 import { fetchAPI, isThereData, msgToJSX } from '../lib/utils';
-import { errors, SERVER_URL } from './authorization';
+import { errors } from './authorization';
 
-export const ActivateEmail = () => {
+export default function ActivateEmail () {
     const { code } = useParams();
     const [response, setResponse] = useState(<></>);
 
@@ -13,7 +14,7 @@ export const ActivateEmail = () => {
             message: 'The email is being activated...'
         }));
 
-        fetchAPI({ url: `${SERVER_URL}/api/activate-email/${code}` })
+        fetchAPI({ url: `${process.env.REACT_APP_API}/activate-email/${code}` })
             .then(data =>
                 setResponse(msgToJSX(
                     isThereData(data) ?
@@ -26,11 +27,11 @@ export const ActivateEmail = () => {
     return (
         <div className="text-center">
             {response}
-            <Link to='/login'>
+            <Link to={`${baseUrl}/`}>
                 <button className="btn btn-outline-dark btn-lg px-5" type="submit">
                     Back
                 </button>
             </Link>
         </div>
     );
-};
+}
