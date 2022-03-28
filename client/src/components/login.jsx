@@ -84,7 +84,7 @@ export default function Login({ setToken }) {
                 >
                     Sign In
                 </button>
-                <Link to={`${baseUrl}/auth`}>
+                <Link to={`${baseUrl}auth`}>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"

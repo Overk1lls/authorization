@@ -27,7 +27,7 @@ export default function ActivateEmail () {
     return (
         <div className="text-center">
             {response}
-            <Link to={`${baseUrl}/`}>
+            <Link to={baseUrl}>
                 <button className="btn btn-outline-dark btn-lg px-5" type="submit">
                     Back
                 </button>

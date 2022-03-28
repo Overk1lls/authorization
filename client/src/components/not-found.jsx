@@ -10,7 +10,7 @@ export default function NotFound() {
                     <br />
                     :(
                 </h1>
-                <Link to={`${baseUrl}/`}>
+                <Link to={baseUrl}>
                     <button
                         className="btn btn-outline-dark mt-3 px-5"
                         type="button"

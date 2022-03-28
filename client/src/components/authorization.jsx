@@ -120,7 +120,7 @@ export default function Authorization() {
                 >
                     Sign Up
                 </button>
-                <Link to={`${baseUrl}/`}>
+                <Link to={baseUrl}>
                     <button
                         className="btn btn-outline-dark btn-lg px-5"
                         type="submit"

@@ -44,7 +44,6 @@ router.post('/reset-password', async (req, res, next) => {
     try {
         const { email } = req.body as IUserAuth;
 
-        console.log('works')
         const user = await Users.findOne({ email });
         if (!user) throw new APIError(ErrorCode.NOT_FOUND, errors.NO_USER);
         else if (user.resetCode) {
@@ -57,7 +56,7 @@ router.post('/reset-password', async (req, res, next) => {
 
         const token = generateId();
         const resetUrl = `${LOCAL_URL}/reset-password/${token}`;
-        console.log('before transport')
+        
         const transport = createTransport({
             host: 'smtp',
             service: 'gmail',
@@ -66,7 +65,7 @@ router.post('/reset-password', async (req, res, next) => {
                 pass: EMAIL_PWD
             }
         });
-        console.log('before sending email')
+        
         await transport.sendMail({
             from: `${user.name} ${user.surname} <${user.email}>`,
             to: user.email,
@@ -77,7 +76,7 @@ router.post('/reset-password', async (req, res, next) => {
 
         user.resetCode = token;
         await user.save();
-        console.log('status?')
+        
         res.status(200).json({ response: 'The reset code is sent', token });
     } catch (error) {
         next(error);

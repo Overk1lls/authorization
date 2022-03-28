@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <div className="text-center">
             <h3>You've successfully authorized!</h3>
-            <Link to={`${baseUrl}/`}>
+            <Link to={baseUrl}>
                 <button
                     className="btn btn-outline-dark mt-3 px-5"
                     type="submit"
