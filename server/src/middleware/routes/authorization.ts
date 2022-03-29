@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { IUserAuth } from '../../interfaces/dto/user.dto';
 import { hashSync } from 'bcrypt';
 import { createTransport } from 'nodemailer';
-import { Users } from '../../models/user';
-import { APIError, ErrorCode } from '../../errors/api.error';
-import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
+import { UsersModel } from '../../models/user';
+import { APIError, ErrorCode } from '../../services/api-error.service';
+import { EMAIL, EMAIL_PWD, FRONT_URL } from '../..';
 import { generateId } from '../../lib/utils';
 
 const router = Router();
@@ -20,14 +20,13 @@ router.post('/', async (req, res, next) => {
             password
         } = req.body as IUserAuth;
 
-        const userExists = await Users.findOne({ email });
-        if (userExists)
-            throw new APIError(ErrorCode.BAD_REQUEST, 'User already exists');
+        const userExists = await UsersModel.findOne({ email });
+        if (userExists) throw new APIError(ErrorCode.BAD_REQUEST, 'User already exists');
 
         const pwdHash = hashSync(password, 3);
         const token = generateId();
         const activationCode = generateId();
-        const url = `${LOCAL_URL}/activate-email/${activationCode}`;
+        const url = `${FRONT_URL}/activate-email/${activationCode}`;
 
         const transport = createTransport({
             host: 'smtp',
@@ -47,7 +46,7 @@ router.post('/', async (req, res, next) => {
         });
         transport.close();
 
-        await Users.create({
+        await UsersModel.create({
             token,
             name,
             surname,
@@ -58,9 +57,7 @@ router.post('/', async (req, res, next) => {
             activationCode
         });
 
-        res.status(201).send({
-            response: 'User activation link is sent to your email'
-        });
+        res.status(201).send({ response: 'User activation link is sent to your email' });
     } catch (error) {
         next(error);
     }

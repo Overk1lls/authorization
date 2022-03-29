@@ -1,4 +1,5 @@
 import { connect, disconnect } from 'mongoose';
+import { APIError, ErrorCode } from './api-error.service';
 
 export interface IDbDriver {
     connect: () => Promise<unknown>;
@@ -9,7 +10,7 @@ export class MongoDb implements IDbDriver {
     private _uri: string;
 
     constructor(uri: string | undefined) {
-        if (!uri) throw new Error('MongoDB URI is undefined');
+        if (!uri) throw new APIError(ErrorCode.SERVER, 'Mongo URI is undefined');
         this._uri = uri;
     }
 

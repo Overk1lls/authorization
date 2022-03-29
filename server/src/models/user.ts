@@ -14,4 +14,4 @@ const schema = new Schema<IUserModel>({
     resetPassword: { type: Boolean }
 });
 
-export const Users = model('user', schema);
+export const UsersModel = model('user', schema);

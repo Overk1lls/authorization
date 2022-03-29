@@ -35,8 +35,7 @@ export default function Authorization() {
         ));
     };
 
-    const setData = (record, value) =>
-        setUserData({ ...userData, [record]: value });
+    const setData = (record, value) => setUserData({ ...userData, [record]: value });
 
     return (
         <form>

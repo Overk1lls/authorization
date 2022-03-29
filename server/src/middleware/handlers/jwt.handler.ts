@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { APIError, ErrorCode } from '../../errors/api.error';
+import { APIError, ErrorCode } from '../../services/api-error.service';
 import { verify } from 'jsonwebtoken';
-import { JWT_SECRET } from '../../lib/config';
+import { JWT_SECRET } from '../..';
 
 export const PAYLOAD = 'payload';
 

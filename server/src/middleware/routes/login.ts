@@ -1,14 +1,13 @@
 import { compareSync } from 'bcrypt';
 import { Router } from 'express';
-import { Users } from '../../models/user';
-import { APIError, ErrorCode } from '../../errors/api.error';
+import { UsersModel } from '../../models/user';
+import { APIError, ErrorCode } from '../../services/api-error.service';
 import { IUserAuth } from '../../interfaces/dto/user.dto';
-import { EMAIL, EMAIL_PWD, LOCAL_URL } from '../..';
+import { EMAIL, EMAIL_PWD, FRONT_URL, JWT_SECRET } from '../..';
 import { createTransport } from 'nodemailer';
 import { generateId } from '../../lib/utils';
-import { errors, JWT_SECRET } from '../../lib/config';
 import { sign } from 'jsonwebtoken';
-import { Tokens } from '../../models/token';
+import { TokensModel } from '../../models/token';
 
 const router = Router();
 
@@ -16,20 +15,16 @@ router.post('/', async (req, res, next) => {
     try {
         const { email, password } = req.body as IUserAuth;
 
-        const user = await Users.findOne({ email });
-        if (!user) throw new APIError(ErrorCode.NOT_FOUND, errors.NO_USER);
+        const user = await UsersModel.findOne({ email });
+        if (!user) throw new APIError(ErrorCode.USER_IS_NOT_FOUND);
 
         const isPwdReal = compareSync(password, user.password);
-        if (!isPwdReal) {
-            throw new APIError(
-                ErrorCode.BAD_REQUEST,
-                'Either email or password is wrong'
-            );
-        }
-        
+        if (!isPwdReal)
+            throw new APIError(ErrorCode.BAD_REQUEST, 'Either email or password is wrong');
+
         const jwt = sign({ email }, JWT_SECRET);
-        await Tokens.findOneAndUpdate({ userEmail: email }, { jwt }, { upsert: true });
-        
+        await TokensModel.findOneAndUpdate({ userEmail: email }, { jwt }, { upsert: true });
+
         res.status(200).json(
             user.activationCode ?
                 { response: 'You need to activate your account in order to log in' } :
@@ -44,8 +39,8 @@ router.post('/reset-password', async (req, res, next) => {
     try {
         const { email } = req.body as IUserAuth;
 
-        const user = await Users.findOne({ email });
-        if (!user) throw new APIError(ErrorCode.NOT_FOUND, errors.NO_USER);
+        const user = await UsersModel.findOne({ email });
+        if (!user) throw new APIError(ErrorCode.USER_IS_NOT_FOUND);
         else if (user.resetCode) {
             throw new APIError(
                 ErrorCode.BAD_REQUEST,
@@ -55,8 +50,8 @@ router.post('/reset-password', async (req, res, next) => {
         user.resetPassword = true;
 
         const token = generateId();
-        const resetUrl = `${LOCAL_URL}/reset-password/${token}`;
-        
+        const resetUrl = `${FRONT_URL}/reset-password/${token}`;
+
         const transport = createTransport({
             host: 'smtp',
             service: 'gmail',
@@ -65,7 +60,7 @@ router.post('/reset-password', async (req, res, next) => {
                 pass: EMAIL_PWD
             }
         });
-        
+
         await transport.sendMail({
             from: `${user.name} ${user.surname} <${user.email}>`,
             to: user.email,
@@ -76,7 +71,7 @@ router.post('/reset-password', async (req, res, next) => {
 
         user.resetCode = token;
         await user.save();
-        
+
         res.status(200).json({ response: 'The reset code is sent', token });
     } catch (error) {
         next(error);

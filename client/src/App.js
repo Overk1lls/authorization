@@ -9,16 +9,13 @@ import {
 } from './components/index';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useToken } from './hooks/useToken';
+import { redirectToBase } from './lib/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-export const baseUrl = process.env.NODE_ENV === 'production' ? '/authorization/' : '/';
 
 function App() {
   const { token, setToken } = useToken();
 
   const redirectIfNoToken = Component => token ? redirectToBase() : <Component />;
-
-  const redirectToBase = () => <Redirect to={`${baseUrl}/`} />;
 
   return (
     <div className="container pt-5">

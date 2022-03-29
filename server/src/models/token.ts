@@ -6,4 +6,4 @@ const schema = new Schema<IUserToken>({
     jwt: { type: String, required: true, unique: true }
 });
 
-export const Tokens = model('token', schema);
+export const TokensModel = model('token', schema);

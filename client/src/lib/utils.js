@@ -1,3 +1,6 @@
+import { Redirect } from "react-router-dom";
+import { baseUrl } from './config';
+
 export const fetchAPI = async ({
     url,
     method = 'GET',
@@ -20,3 +23,5 @@ export const msgToJSX = ({ message, type }) => {
 };
 
 export const isThereData = data => data ? (data.error ? false : true) : false;
+
+export const redirectToBase = () => <Redirect to={`${baseUrl}`} />;

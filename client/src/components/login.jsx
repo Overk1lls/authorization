@@ -24,9 +24,7 @@ export default function Login({ setToken }) {
         }).then(data =>
             isThereData(data) ?
                 setToken(data.token) :
-                setResponse(msgToJSX({
-                    message: !data ? errors.SERVER : data.error
-                })));
+                setResponse(msgToJSX({ message: !data ? errors.SERVER : data.error })));
     };
 
     const resetPasswordHandler = async () => {
@@ -48,8 +46,7 @@ export default function Login({ setToken }) {
         });
     };
 
-    const setData = (record, value) =>
-        setCredentials({ ...credentials, [record]: value });
+    const setData = (record, value) => setCredentials({ ...credentials, [record]: value });
 
     return (
         <form>
